@@ -7,6 +7,10 @@ module.exports = {
   ],
   theme: {
     extend: {
+      screens: {
+        portrait: { raw: "(max-aspect-ratio: 3/2)" },
+        landscape: { raw: "(min-aspect-ratio: 3/2)" },
+      },
       fontFamily: {
         "custom-font-family": ["Montserrat", "sans-serif"],
       },

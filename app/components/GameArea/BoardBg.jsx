@@ -5,7 +5,7 @@ export default function BoardBg() {
         id="snakeladders"
         viewBox="0 0 600 600"
         preserveAspectRatio="none"
-        className="absolute w-full h-full"
+        className="absolute w-full h-full z-10"
       >
         <g class="ladders-big">
           <path
