@@ -12,7 +12,10 @@ export default function ControlSection() {
     value: 0,
     flag: false,
   });
-  const [playerOneScore, setPlayerOneScore] = useState(1);
+  const [playerOne, setPlayerOne] = useState({
+    score: 1,
+    flag: true,
+  });
 
   return (
     <section className="flex flex-col gap-8 border-2 py-4 px-8">
@@ -21,20 +24,20 @@ export default function ControlSection() {
         <DiceGenerator
           diceValue={diceValue}
           setDiceValue={setDiceValue}
-          playerOneScore={playerOneScore}
-          setPlayerOneScore={setPlayerOneScore}
+          playerOne={playerOne}
+          setPlayerOne={setPlayerOne}
         />
       </div>
       <div>
-        <StatusMessage playerOneScore={playerOneScore} />
+        <StatusMessage playerOneScore={playerOne.score} />
       </div>
       <div>
         <ResetButton
-          playerOneScore={playerOneScore}
-          setPlayerOneScore={setPlayerOneScore}
+          playerOne={playerOne}
+          setPlayerOne={setPlayerOne}
         />
       </div>
-      {playerOneScore === 100 && <Confetti className="w-[100dvw] h-[100dvh]" />}
+      {playerOne.score === 100 && <Confetti className="w-[100dvw] h-[100dvh]" />}
     </section>
   );
 }

@@ -1,12 +1,12 @@
 export default function ResetButton(props) {
   function resetHandler() {
     document
-      .getElementById(`${props.playerOneScore}`)
+      .getElementById(`${props.playerOne.score}`)
       .classList.remove("after:content-[url('/pawn-red.svg')]");
     document
       .getElementById("1")
       .classList.add("after:content-[url('/pawn-red.svg')]");
-    props.setPlayerOneScore(1);
+    props.setPlayerOne({ ...props.playerOne, score: 1, flag: true });
   }
 
   return (
