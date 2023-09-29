@@ -3,50 +3,32 @@
 import { useEffect } from "react";
 
 export default function DiceGenerator(props) {
-  function DiceGenerator() {
-    props.setDiceValue(Math.floor(Math.random() * 6) + 1);
+
+  const constraints = {
+    2: 42,
+    7:14,
+    8:31,
+  }
+
+  async function DiceGenerator() {
+    await props.setDiceValue({
+      ...props.diceValue,
+      value: Math.floor(Math.random() * 6) + 1,
+      flag: !props.diceValue.flag,
+    });
   }
 
   useEffect(() => {
-    let pos = props.user1Score + props.diceValue;
-    document
-      .getElementById(`${props.user1Score}`)
-      .classList.remove(
-        "relative",
-        "z-50",
-        "after:content-[url('/pawn-red.svg')]",
-        "after:content-[url('/pawn-yellow.svg')]",
-        "after:absolute",
-        "after:top-1/2",
-        "after:-translate-y-1/2",
-        "after:left-1/2",
-        "after:-translate-x-1/2",
-        "after:w-[75%]",
-        "after:h-[75%]"
-      );
-    props.setUser1Score(pos);
-  }, [props.diceValue]);
-
-  useEffect(() => {
-    if (props.user1Score <= 100) {
+    if (props.playerOneScore + props.diceValue.value <= 100) {
       document
-      .getElementById(`${props.user1Score}`)
-      .classList.add(
-        "relative",
-        "after:content-[url('/pawn-red.svg')]",
-        "after:content-[url('/pawn-yellow.svg')]",
-        "after:z-20",
-        "after:absolute",
-        "after:top-1/2",
-        "after:-translate-y-1/2",
-        "after:left-1/2",
-        "after:-translate-x-1/2",
-        "after:w-[75%]",
-        "after:h-[75%]"
-      );
-      console.log(props.user1Score);
+        .getElementById(`${props.playerOneScore}`)
+        .classList.remove("after:content-[url('/pawn-red.svg')]");
+      document
+        .getElementById(`${props.playerOneScore + props.diceValue.value}`)
+        .classList.add("after:content-[url('/pawn-red.svg')]");
+      props.setPlayerOneScore(props.playerOneScore + props.diceValue.value);
     }
-  }, [props.user1Score]);
+  }, [props.diceValue.flag]);
 
   return (
     <button

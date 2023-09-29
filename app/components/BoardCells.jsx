@@ -3,23 +3,26 @@
 import { useEffect } from "react";
 
 export default function BoardCells() {
-  // useEffect(() => {
-  //   document
-  //     .getElementById("1")
-  //     .classList.add(
-  //       "relative",
-  //       "z-50",
-  //       "after:content-[url('/pawn-red.svg')]",
-  //       "after:content-[url('/pawn-yellow.svg')]",
-  //       "after:absolute",
-  //       "after:top-1/2",
-  //       "after:-translate-y-1/2",
-  //       "after:left-1/2",
-  //       "after:-translate-x-1/2",
-  //       "after:w-[75%]",
-  //       "after:h-[75%]"
-  //     );
-  // }, []);
+  useEffect(() => {
+    for (let i = 1; i <= 100; i++) {
+      document
+        .getElementById(`${i}`)
+        .classList.add(
+          "relative",
+          "after:z-20",
+          "after:absolute",
+          "after:top-1/2",
+          "after:-translate-y-1/2",
+          "after:left-1/2",
+          "after:-translate-x-1/2",
+          "after:w-[75%]",
+          "after:h-[75%]"
+        );
+    }
+    document
+      .getElementById("1")
+      .classList.add("after:content-[url('/pawn-red.svg')]");
+  }, []);
 
   return (
     <>
