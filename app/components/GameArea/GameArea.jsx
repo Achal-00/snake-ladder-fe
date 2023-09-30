@@ -1,4 +1,4 @@
-import BoardCells from "../BoardCells";
+import BoardCells from "./BoardCells";
 import BoardBg from "./BoardBg";
 
 export default function GameArea() {

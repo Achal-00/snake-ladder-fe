@@ -21,7 +21,7 @@ export default function BoardCells() {
     }
     document
       .getElementById("1")
-      .classList.add("after:content-[url('/pawn-red.svg')]");
+      .classList.add("after:content-[url('/pawn-red.svg')]", "after:content-[url('/pawn-yellow.svg')]");
   }, []);
 
   return (
