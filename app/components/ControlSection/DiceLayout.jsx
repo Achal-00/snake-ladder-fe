@@ -1,32 +1,7 @@
-import { motion, useAnimate } from "framer-motion";
-import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
 export default function DiceLayout(props) {
   const diceValue = useSelector((state) => state.dice.value);
-
-  // const [scope, animate] = useAnimate();
-
-  // useEffect(() => {
-  //   (async () => {
-  //     if (props.diceValue.animationFlag) {
-  //       await animate(
-  //         scope.current,
-  //         { rotate: [0, 90, 0, 90, 0, 90, 0, 90, 0, 90, 0] },
-  //         { duration: 1 }
-  //       );
-  //       props.setDiceValue({
-  //         ...props.diceValue,
-  //         value: Math.floor(Math.random() * 6) + 1,
-  //         flag: !props.diceValue.flag,
-  //       });
-  //     }
-  //   })();
-  // }, [props.diceValue.animationFlag]);
-
-  // setTimeout(() => {
-  //   props.setDiceValue({ ...props.diceValue, animationFlag: false });
-  // }, 2000);
 
   return (
     <div className="border w-full relative">

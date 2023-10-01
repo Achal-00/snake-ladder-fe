@@ -3,6 +3,7 @@ import diceReducer from "./reducers/dice";
 import playerOneReducer from "./reducers/playerOne";
 import playerTwoReducer from "./reducers/PlayerTwo";
 import statusMessageReducer from "./reducers/statusMessage";
+import processStatusReducer from "./reducers/processStatus";
 
 export default configureStore({
   reducer: {
@@ -10,5 +11,6 @@ export default configureStore({
     playerOne: playerOneReducer,
     playerTwo: playerTwoReducer,
     statusMessage: statusMessageReducer,
+    processStatus: processStatusReducer,
   },
 });

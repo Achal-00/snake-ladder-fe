@@ -9,6 +9,7 @@ import { SET_VALUE } from "@/app/redux/reducers/dice";
 import { SET_PLAYER_ONE_SCORE } from "@/app/redux/reducers/playerOne";
 import { SET_PLAYER_TWO_SCORE } from "@/app/redux/reducers/PlayerTwo";
 import { SET_STATUS_MESSAGE } from "@/app/redux/reducers/statusMessage";
+import { SET_PROCESS_STATUS } from "@/app/redux/reducers/processStatus";
 
 export default function ControlSection() {
   const dispatch = useDispatch();
@@ -48,6 +49,7 @@ export default function ControlSection() {
 
   async function startProcess() {
     try {
+      dispatch(SET_PROCESS_STATUS(true));
       await diceAnimate();
       await playerOne();
       await playerTwo();
@@ -55,6 +57,7 @@ export default function ControlSection() {
         dispatch(SET_STATUS_MESSAGE("YOUR TURN"));
         document.querySelector(".process-btn").removeAttribute("disabled");
       });
+      dispatch(SET_PROCESS_STATUS(false));
       console.log("pawn movements completed");
     } catch (err) {
       return;
