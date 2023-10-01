@@ -2,32 +2,15 @@
 import DiceLayout from "./DiceLayout";
 import ResetButton from "./ResetButton";
 import StatusMessage from "./StatusMessage";
-import { useEffect, useState } from "react";
-import DiceGenerator from "./DiceGenerator";
 import Confetti from "react-confetti";
 import { useAnimate } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import { SET_VALUE } from "@/app/redux/reducers/dice";
 import { SET_PLAYER_ONE_SCORE } from "@/app/redux/reducers/playerOne";
+import { SET_PLAYER_TWO_SCORE } from "@/app/redux/reducers/PlayerTwo";
+import { SET_STATUS_MESSAGE } from "@/app/redux/reducers/statusMessage";
 
 export default function ControlSection() {
-  // const [diceValue, setDiceValue] = useState({
-  //   value: 1,
-  //   flag: false,
-  //   animationFlag: false,
-  // });
-  // const [playerOne, setPlayerOne] = useState({
-  //   score: 1,
-  //   flag: true,
-  // });
-  // const [playerTwo, setPlayerTwo] = useState({
-  //   score: 1,
-  //   flag: true,
-  // });
-  // function startProcess() {
-  //   console.log("started");
-  // }
-
   const dispatch = useDispatch();
   const [scope, animate] = useAnimate();
 
@@ -55,13 +38,27 @@ export default function ControlSection() {
     99: 80,
   };
 
-  const diceValue = useSelector((state) => state.dice.value);
+  let diceValue;
   const playerOneScore = useSelector((state) => state.playerOne.score);
+  const playerTwoScore = useSelector((state) => state.playerTwo.score);
+
+  function sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
 
   async function startProcess() {
-    await diceAnimate();
-    await playerOne();
-    console.log("pawn movement completed");
+    try {
+      await diceAnimate();
+      await playerOne();
+      await playerTwo();
+      await sleep(1000).then(() => {
+        dispatch(SET_STATUS_MESSAGE("YOUR TURN"));
+        document.querySelector(".process-btn").removeAttribute("disabled");
+      });
+      console.log("pawn movements completed");
+    } catch (err) {
+      return;
+    }
   }
 
   async function diceAnimate() {
@@ -70,23 +67,81 @@ export default function ControlSection() {
       { rotate: [0, 90, 0, 90, 0, 90, 0, 90, 0, 90, 0] },
       { duration: 1 }
     );
-    dispatch(SET_VALUE(Math.floor(Math.random() * 6) + 1));
+    diceValue = Math.floor(Math.random() * 6) + 1;
+    dispatch(SET_VALUE(diceValue));
   }
 
   async function playerOne() {
-    console.log(diceValue);
     const newScore = diceValue + playerOneScore;
-    
+    if (newScore <= 100) {
+      document
+        .getElementById(`${playerOneScore}`)
+        .classList.remove("after:content-[url('/pawn-red.svg')]");
+      document
+        .getElementById(`${newScore}`)
+        .classList.add("after:content-[url('/pawn-red.svg')]");
 
-    // if (newScore <= 100) {
-    //   document
-    //     .getElementById(`${playerOneScore}`)
-    //     .classList.remove("after:content-[url('/pawn-red.svg')]");
-    //   document
-    //     .getElementById(`${newScore}`)
-    //     .classList.add("after:content-[url('/pawn-red.svg')]");
-    //   dispatch(SET_PLAYER_ONE_SCORE(newScore));
-    // }
+      dispatch(SET_PLAYER_ONE_SCORE(newScore));
+
+      if (newScore === 100) throw new Error("Finished");
+
+      if (`${newScore}` in constraints) {
+        await sleep(500).then(() => {
+          document
+            .getElementById(`${newScore}`)
+            .classList.remove("after:content-[url('/pawn-red.svg')]");
+          document
+            .getElementById(`${constraints[newScore]}`)
+            .classList.add("after:content-[url('/pawn-red.svg')]");
+
+          dispatch(SET_PLAYER_ONE_SCORE(constraints[newScore]));
+        });
+      }
+    }
+  }
+
+  async function playerTwo() {
+    await sleep(500).then(() =>
+      dispatch(SET_STATUS_MESSAGE("OPPONENT'S TURN"))
+    );
+
+    await sleep(2000).then(async () => {
+      await diceAnimate();
+
+      const newScore = diceValue + playerTwoScore;
+      if (newScore <= 100) {
+        document
+          .getElementById(`${playerTwoScore}`)
+          .classList.remove("after:content-[url('/pawn-yellow.svg')]");
+        document
+          .getElementById(`${newScore}`)
+          .classList.add("after:content-[url('/pawn-yellow.svg')]");
+
+        dispatch(SET_PLAYER_TWO_SCORE(newScore));
+
+        if (newScore === 100) throw new Error("Finished");
+
+        if (`${newScore}` in constraints) {
+          await sleep(500).then(() => {
+            document
+              .getElementById(`${newScore}`)
+              .classList.remove("after:content-[url('/pawn-yellow.svg')]");
+            document
+              .getElementById(`${constraints[newScore]}`)
+              .classList.add("after:content-[url('/pawn-yellow.svg')]");
+            dispatch(SET_PLAYER_TWO_SCORE(constraints[newScore]));
+          });
+        }
+      }
+    });
+  }
+
+  if (playerOneScore === 100) {
+    dispatch(SET_STATUS_MESSAGE("YOU WON"));
+  }
+
+  if (playerTwoScore === 100) {
+    dispatch(SET_STATUS_MESSAGE("YOU LOSE"));
   }
 
   return (
@@ -94,9 +149,11 @@ export default function ControlSection() {
       <div className="flex justify-between items-center gap-4">
         <DiceLayout scope={scope} />
         <button
-          className={`bg-purple-500 px-8 py-2 rounded-md text-white font-medium shadow-md hover:bg-purple-400`}
-          // onClick={() => dispatch(SET_VALUE(Math.floor(Math.random() * 6) + 1))}
-          onClick={startProcess}
+          className="bg-purple-500 px-8 py-2 rounded-md text-white font-medium shadow-md hover:bg-purple-400 process-btn"
+          onClick={(e) => {
+            e.currentTarget.setAttribute("disabled", "");
+            startProcess();
+          }}
         >
           Roll
         </button>
@@ -107,9 +164,7 @@ export default function ControlSection() {
       <div>
         <ResetButton />
       </div>
-      {/* {playerOne.score === 100 && (
-              <Confetti className="w-[100dvw] h-[100dvh]" />
-            )} */}
+      {playerOneScore === 100 && <Confetti className="w-[100dvw] h-[100dvh]" />}
     </section>
   );
 }

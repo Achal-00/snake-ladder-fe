@@ -1,15 +1,13 @@
-export default function StatusMessage(props) {
+import { useSelector } from "react-redux";
+
+export default function StatusMessage() {
+  const statusMessage = useSelector((state) => state.statusMessage.message);
+
   return (
     <>
-      {props.playerOneScore === 100 ? (
-        <h1 className="text-center text-2xl tracking-widest text-purple-500">
-          YOU WON
-        </h1>
-      ) : (
-        <h1 className="text-center text-2xl tracking-widest text-purple-500">
-          YOUR TURN
-        </h1>
-      )}
+      <h1 className="text-center text-2xl tracking-widest text-purple-500">
+        {statusMessage}
+      </h1>
     </>
   );
 }
