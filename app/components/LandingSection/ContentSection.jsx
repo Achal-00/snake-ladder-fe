@@ -18,10 +18,10 @@ export default function ContentSection() {
           Quick Match
         </Link>
         <Link
-          href="/login"
+          href="/signup"
           className="border-2 w-36 py-2 text-center rounded-md font-medium text-sm text-white hover:bg-white hover:text-purple-400"
         >
-          LogIn
+          SignUp
         </Link>
       </div>
     </div>

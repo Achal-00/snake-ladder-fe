@@ -1,5 +1,5 @@
-import ContentSection from "../components/LoginSection/ContentSection";
-import HeroImage from "../components/LoginSection/HeroImage";
+import ContentSection from "../components/signUpSection/ContentSection";
+import HeroImage from "../components/signUpSection/HeroImage";
 
 export default function page() {
   return (

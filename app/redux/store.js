@@ -4,6 +4,7 @@ import playerOneReducer from "./reducers/playerOne";
 import playerTwoReducer from "./reducers/PlayerTwo";
 import statusMessageReducer from "./reducers/statusMessage";
 import processStatusReducer from "./reducers/processStatus";
+import authUserReducer from "./reducers/authUser";
 
 export default configureStore({
   reducer: {
@@ -12,5 +13,6 @@ export default configureStore({
     playerTwo: playerTwoReducer,
     statusMessage: statusMessageReducer,
     processStatus: processStatusReducer,
+    authUser: authUserReducer,
   },
 });
