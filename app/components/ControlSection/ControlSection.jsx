@@ -3,17 +3,24 @@ import DiceLayout from "./DiceLayout";
 import ResetButton from "./ResetButton";
 import StatusMessage from "./StatusMessage";
 import Confetti from "react-confetti";
-import { useAnimate } from "framer-motion";
+import { motion, useAnimate } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import { SET_VALUE } from "@/app/redux/reducers/dice";
 import { SET_PLAYER_ONE_SCORE } from "@/app/redux/reducers/playerOne";
 import { SET_PLAYER_TWO_SCORE } from "@/app/redux/reducers/PlayerTwo";
 import { SET_STATUS_MESSAGE } from "@/app/redux/reducers/statusMessage";
 import { SET_PROCESS_STATUS } from "@/app/redux/reducers/processStatus";
+import PawnDetails from "./PawnDetails";
+import HomeButton from "./HomeButton";
+import { useEffect } from "react";
 
 export default function ControlSection() {
   const dispatch = useDispatch();
   const [scope, animate] = useAnimate();
+  const playerOneScore = useSelector((state) => state.playerOne.score);
+  const playerTwoScore = useSelector((state) => state.playerTwo.score);
+  const processStatus = useSelector((state) => state.processStatus.status);
+  let diceValue;
 
   const constraints = {
     2: 38,
@@ -39,13 +46,18 @@ export default function ControlSection() {
     99: 80,
   };
 
-  let diceValue;
-  const playerOneScore = useSelector((state) => state.playerOne.score);
-  const playerTwoScore = useSelector((state) => state.playerTwo.score);
-
   function sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
+
+  useEffect(() => {
+    document
+      .getElementById(`${playerOneScore}`)
+      .classList.add("after:content-[url('/pawn-red.svg')]");
+    document
+      .getElementById(`${playerTwoScore}`)
+      .classList.add("after:content-[url('/pawn-yellow.svg')]");
+  }, []);
 
   async function startProcess() {
     try {
@@ -55,7 +67,6 @@ export default function ControlSection() {
       await playerTwo();
       await sleep(1000).then(() => {
         dispatch(SET_STATUS_MESSAGE("YOUR TURN"));
-        document.querySelector(".process-btn").removeAttribute("disabled");
       });
       dispatch(SET_PROCESS_STATUS(false));
       console.log("pawn movements completed");
@@ -151,22 +162,19 @@ export default function ControlSection() {
     <section className="flex flex-col gap-8 border-2 py-4 px-8">
       <div className="flex justify-between items-center gap-4">
         <DiceLayout scope={scope} />
-        <button
+        <motion.button
+          whileTap={{ scale: 1.3 }}
           className="bg-purple-500 px-8 py-2 rounded-md text-white font-medium shadow-md hover:bg-purple-400 process-btn"
-          onClick={(e) => {
-            e.currentTarget.setAttribute("disabled", "");
-            startProcess();
-          }}
+          disabled={processStatus}
+          onClick={startProcess}
         >
           Roll
-        </button>
+        </motion.button>
       </div>
-      <div>
-        <StatusMessage />
-      </div>
-      <div>
-        <ResetButton />
-      </div>
+      <StatusMessage />
+      <ResetButton />
+      <PawnDetails />
+      <HomeButton />
       {playerOneScore === 100 && <Confetti className="w-[100dvw] h-[100dvh]" />}
     </section>
   );

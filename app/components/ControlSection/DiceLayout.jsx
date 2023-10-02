@@ -4,7 +4,7 @@ export default function DiceLayout(props) {
   const diceValue = useSelector((state) => state.dice.value);
 
   return (
-    <div className="border w-full relative">
+    <div className="relative">
       <div
         ref={props.scope}
         className="grid grid-cols-3 gap-2 w-20 h-max p-2 rounded-md bg-red-50 shadow-lg relative right-0"
