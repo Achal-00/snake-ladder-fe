@@ -33,7 +33,7 @@ export default function signUpForm() {
           <input
             type="password"
             placeholder="Password"
-            name="username"
+            name="password"
             className="w-10/12 h-10 rounded border-2 border-[#323232] bg-white shadow-[4px_4px_#323232] font-medium text-[#323232] py-1 px-3 outline-none"
             onChange={(e) => setPassword(e.currentTarget.value)}
             value={password}
@@ -48,9 +48,11 @@ export default function signUpForm() {
         <Link href="/login" className="text-center font-medium underline">
           Have an account?
         </Link>
-        <p className="text-sm text-red-400 italic font-medium text-center">
-          {error}
-        </p>
+        {error && (
+          <p className="text-sm text-red-400 italic font-medium text-center">
+            {error}
+          </p>
+        )}
       </div>
     </div>
   );

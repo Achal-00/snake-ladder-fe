@@ -2,17 +2,17 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { LOGIN } from "../redux/reducers/authUser";
 
-export const useSignup = () => {
+export const useLogin = () => {
   const dispatch = useDispatch();
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
 
-  const signup = async (username, password) => {
+  const login = async (username, password) => {
     setIsLoading(true);
     setError(null);
 
     try {
-      const response = await fetch("http://localhost:4000/signup", {
+      const response = await fetch("http://localhost:4000/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
@@ -35,5 +35,5 @@ export const useSignup = () => {
     }
   };
 
-  return { signup, error, isLoading };
+  return { login, error, isLoading };
 };

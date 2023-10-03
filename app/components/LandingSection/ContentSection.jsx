@@ -1,6 +1,11 @@
+"use client";
+
 import Link from "next/link";
+import { useSelector } from "react-redux";
 
 export default function ContentSection() {
+  const isLogged = useSelector((state) => state.authUser.user);
+
   return (
     <div className="landscape:self-center flex flex-col gap-4">
       <h1 className="text-white text-4xl font-bold text-center landscape:text-left">
@@ -17,12 +22,21 @@ export default function ContentSection() {
         >
           Quick Match
         </Link>
-        <Link
-          href="/signup"
-          className="border-2 w-36 py-2 text-center rounded-md font-medium text-sm text-white hover:bg-white hover:text-purple-400"
-        >
-          SignUp
-        </Link>
+        {isLogged ? (
+          <Link
+            href="/dashboard"
+            className="border-2 w-36 py-2 text-center rounded-md font-medium text-sm text-white hover:bg-white hover:text-purple-400"
+          >
+            Dashboard
+          </Link>
+        ) : (
+          <Link
+            href="/signup"
+            className="border-2 w-36 py-2 text-center rounded-md font-medium text-sm text-white hover:bg-white hover:text-purple-400"
+          >
+            SignUp
+          </Link>
+        )}
       </div>
     </div>
   );

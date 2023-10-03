@@ -69,7 +69,6 @@ export default function ControlSection() {
         dispatch(SET_STATUS_MESSAGE("YOUR TURN"));
       });
       dispatch(SET_PROCESS_STATUS(false));
-      console.log("pawn movements completed");
     } catch (err) {
       return;
     }
