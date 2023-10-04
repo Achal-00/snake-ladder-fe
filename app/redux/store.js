@@ -10,6 +10,11 @@ import playerTwoReducer from "./reducers/PlayerTwo";
 import statusMessageReducer from "./reducers/statusMessage";
 import processStatusReducer from "./reducers/processStatus";
 import authUserReducer from "./reducers/authUser";
+import diceLoggedReducer from "./reducers/diceLogged";
+import playerOneLoggedReducer from "./reducers/PlayerOneLogged";
+import playerTwoLoggedReducer from "./reducers/playerTwoLogged";
+import statusMessageLoggedReducer from "./reducers/statusMessageLogged";
+import processStatusLoggedReducer from "./reducers/processStatusLogged";
 import {
   FLUSH,
   PAUSE,
@@ -30,6 +35,11 @@ const persistConfig = {
     "playerTwo",
     "statusMessage",
     "processStatus",
+    "diceLogged",
+    "playerOneLogged",
+    "playerTwoLogged",
+    "statusMessageLogged",
+    "processStatusLogged",
   ],
 };
 
@@ -40,6 +50,11 @@ const rootReducer = combineReducers({
   statusMessage: statusMessageReducer,
   processStatus: processStatusReducer,
   authUser: authUserReducer,
+  diceLogged: diceLoggedReducer,
+  playerOneLogged: playerOneLoggedReducer,
+  playerTwoLogged: playerTwoLoggedReducer,
+  statusMessageLogged: statusMessageLoggedReducer,
+  processStatusLogged: processStatusLoggedReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
-import { SET_PLAYER_ONE_SCORE } from "@/app/redux/reducers/playerOne";
-import { SET_PLAYER_TWO_SCORE } from "@/app/redux/reducers/PlayerTwo";
-import { SET_PROCESS_STATUS } from "@/app/redux/reducers/processStatus";
-import { SET_STATUS_MESSAGE } from "@/app/redux/reducers/statusMessage";
+import { SET_PLAYER_ONE_SCORE } from "@/app/redux/reducers/PlayerOneLogged";
+import { SET_PLAYER_TWO_SCORE } from "@/app/redux/reducers/playerTwoLogged";
+import { SET_PROCESS_STATUS } from "@/app/redux/reducers/processStatusLogged";
+import { SET_STATUS_MESSAGE } from "@/app/redux/reducers/statusMessageLogged";
 
 export default function ResetButton() {
   const dispatch = useDispatch();

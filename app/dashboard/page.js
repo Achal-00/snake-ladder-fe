@@ -1,11 +1,9 @@
 "use client";
 import Link from "next/link";
-import { useLogout } from "../Hooks/useLogout";
 import { useSelector } from "react-redux";
 import UserDashboard from "../components/Dashboard/UserDashboard";
 
 export default function page() {
-  const logout = useLogout();
   const isLogged = useSelector((state) => state.authUser.user);
 
   return (

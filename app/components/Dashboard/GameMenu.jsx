@@ -1,17 +1,14 @@
-import { useStorage } from "@/app/Hooks/useStorage";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 
 export default function GameMenu() {
-  //   const storage = useStorage();
-  //   storage();
   const user = useSelector((state) => state.authUser.user);
 
   return (
     <div className="bg-gray-100 w-11/12 landscape:w-1/2 mx-auto self-start landscape:self-center shadow-[4px_4px_#323232] grid gap-4 p-4 py-8 rounded-md">
       {user && (
         <h1 className="text-right italic font-medium text-gray-500">
-          {user.username}
+          {user.Username}
         </h1>
       )}
       <Link
