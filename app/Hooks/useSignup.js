@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { LOGIN } from "../redux/reducers/authUser";
+import { useRouter } from "next/navigation";
 
 export const useSignup = () => {
+  const router = useRouter();
   const dispatch = useDispatch();
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
@@ -25,9 +27,9 @@ export const useSignup = () => {
       }
 
       if (response.ok) {
-        localStorage.setItem("user", JSON.stringify(data));
         dispatch(LOGIN(data));
         setIsLoading(false);
+        router.push("/dashboard");
       }
     } catch (err) {
       setError("Network Error");
