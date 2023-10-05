@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const playerOneLogged = createSlice({
   name: "playerOneLogged",
   initialState: {
-    score: 98,
+    score: 1,
   },
   reducers: {
     SET_PLAYER_ONE_SCORE: (state, action) => {

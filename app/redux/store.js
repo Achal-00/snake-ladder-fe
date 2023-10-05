@@ -37,8 +37,6 @@ const persistConfig = {
     "statusMessage",
     "processStatus",
     "diceLogged",
-    "playerOneLogged",
-    "playerTwoLogged",
     "statusMessageLogged",
     "processStatusLogged",
   ],

@@ -3,6 +3,8 @@ import { useDispatch } from "react-redux";
 import { LOGIN } from "../redux/reducers/authUser";
 import { useRouter } from "next/navigation";
 import { SET_WIN_COUNT } from "../redux/reducers/winCount";
+import { SET_PLAYER_ONE_SCORE } from "../redux/reducers/playerOneLogged";
+import { SET_PLAYER_TWO_SCORE } from "../redux/reducers/playerTwoLogged";
 
 export const useLogin = () => {
   const router = useRouter();
@@ -30,6 +32,8 @@ export const useLogin = () => {
       if (response.ok) {
         dispatch(LOGIN(data));
         dispatch(SET_WIN_COUNT(data.wins));
+        dispatch(SET_PLAYER_ONE_SCORE(data.userPawnPos));
+        dispatch(SET_PLAYER_TWO_SCORE(data.opponentPawnPos));
         setIsLoading(false);
         router.push("/dashboard");
       }

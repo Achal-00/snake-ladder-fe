@@ -19,6 +19,7 @@ export default function ControlSection() {
   const dispatch = useDispatch();
   const [scope, animate] = useAnimate();
   const username = useSelector((state) => state.authUser.user).Username;
+  const token = useSelector((state) => state.authUser.user).token;
   const win = useSelector((state) => state.winCount.value);
   const playerOneScore = useSelector((state) => state.playerOneLogged.score);
   const playerTwoScore = useSelector((state) => state.playerTwoLogged.score);
@@ -51,11 +52,56 @@ export default function ControlSection() {
     99: 80,
   };
 
+  window.onbeforeunload = async () => {
+    if (
+      playerOneScore === 100 ||
+      playerTwoScore === 100 ||
+      (playerOneScore === 1 && playerTwoScore === 1)
+    ) {
+      const response = await fetch("http://localhost:4000/updatepawn", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          username,
+          playerOneScore: 1,
+          playerTwoScore: 1,
+        }),
+      });
+      dispatch(SET_PLAYER_ONE_SCORE(1));
+      dispatch(SET_PLAYER_TWO_SCORE(1));
+    } else {
+      const response = await fetch("http://localhost:4000/updatepawn", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ username, playerOneScore, playerTwoScore }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        console.log(data.error);
+      }
+
+      if (response.ok) {
+        console.log(data.success);
+      }
+    }
+  };
+
   const updateWinCount = async () => {
     let newCount = win + 1;
     const response = await fetch("http://localhost:4000/updatewincount", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
       body: JSON.stringify({ username, newCount }),
     });
 
@@ -180,16 +226,6 @@ export default function ControlSection() {
       }
     });
   }
-
-  // if (playerOneScore === 100) {
-  //   dispatch(SET_STATUS_MESSAGE("YOU WON"));
-  //   dispatch(INCREMENT_WIN_COUNT());
-  //   console.log("ok");
-  // }
-
-  // if (playerTwoScore === 100) {
-  //   dispatch(SET_STATUS_MESSAGE("YOU LOSE"));
-  // }
 
   return (
     <section className="flex flex-col gap-8 border-2 py-4 px-8">
