@@ -1,15 +1,21 @@
 import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
-import { SET_PLAYER_ONE_SCORE } from "@/app/redux/reducers/PlayerOneLogged";
+import { SET_PLAYER_ONE_SCORE } from "@/app/redux/reducers/playerOneLogged";
 import { SET_PLAYER_TWO_SCORE } from "@/app/redux/reducers/playerTwoLogged";
 import { SET_PROCESS_STATUS } from "@/app/redux/reducers/processStatusLogged";
 import { SET_STATUS_MESSAGE } from "@/app/redux/reducers/statusMessageLogged";
 
 export default function ResetButton() {
   const dispatch = useDispatch();
-  const playerOneCurrentScore = useSelector((state) => state.playerOne.score);
-  const playerTwoCurrentScore = useSelector((state) => state.playerTwo.score);
-  const processStatus = useSelector((state) => state.processStatus.status);
+  const playerOneCurrentScore = useSelector(
+    (state) => state.playerOneLogged.score
+  );
+  const playerTwoCurrentScore = useSelector(
+    (state) => state.playerTwoLogged.score
+  );
+  const processStatus = useSelector(
+    (state) => state.processStatusLogged.status
+  );
 
   function resetHandler() {
     if (

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { LOGIN } from "../redux/reducers/authUser";
 import { useRouter } from "next/navigation";
+import { SET_WIN_COUNT } from "../redux/reducers/winCount";
 
 export const useLogin = () => {
   const router = useRouter();
@@ -28,6 +29,7 @@ export const useLogin = () => {
 
       if (response.ok) {
         dispatch(LOGIN(data));
+        dispatch(SET_WIN_COUNT(data.wins));
         setIsLoading(false);
         router.push("/dashboard");
       }

@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 
 export default function DiceLayout(props) {
-  const diceValue = useSelector((state) => state.dice.value);
+  const diceValue = useSelector((state) => state.diceLogged.value);
 
   return (
     <div className="relative">

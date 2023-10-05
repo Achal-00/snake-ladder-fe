@@ -6,20 +6,25 @@ import Confetti from "react-confetti";
 import { motion, useAnimate } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import { SET_VALUE } from "@/app/redux/reducers/diceLogged";
-import { SET_PLAYER_ONE_SCORE } from "@/app/redux/reducers/PlayerOneLogged";
+import { SET_PLAYER_ONE_SCORE } from "@/app/redux/reducers/playerOneLogged";
 import { SET_PLAYER_TWO_SCORE } from "@/app/redux/reducers/playerTwoLogged";
 import { SET_STATUS_MESSAGE } from "@/app/redux/reducers/statusMessageLogged";
 import { SET_PROCESS_STATUS } from "@/app/redux/reducers/processStatusLogged";
 import PawnDetails from "./PawnDetails";
 import HomeButton from "./HomeButton";
 import { useEffect } from "react";
+import { INCREMENT_WIN_COUNT } from "@/app/redux/reducers/winCount";
 
 export default function ControlSection() {
   const dispatch = useDispatch();
   const [scope, animate] = useAnimate();
-  const playerOneScore = useSelector((state) => state.playerOne.score);
-  const playerTwoScore = useSelector((state) => state.playerTwo.score);
-  const processStatus = useSelector((state) => state.processStatus.status);
+  const username = useSelector((state) => state.authUser.user).Username;
+  const win = useSelector((state) => state.winCount.value);
+  const playerOneScore = useSelector((state) => state.playerOneLogged.score);
+  const playerTwoScore = useSelector((state) => state.playerTwoLogged.score);
+  const processStatus = useSelector(
+    (state) => state.processStatusLogged.status
+  );
   let diceValue;
 
   const constraints = {
@@ -44,6 +49,25 @@ export default function ControlSection() {
     92: 88,
     95: 75,
     99: 80,
+  };
+
+  const updateWinCount = async () => {
+    let newCount = win + 1;
+    const response = await fetch("http://localhost:4000/updatewincount", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, newCount }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      console.log(data.error);
+    }
+
+    if (response.ok) {
+      console.log(data.success);
+    }
   };
 
   function sleep(ms) {
@@ -96,7 +120,12 @@ export default function ControlSection() {
 
       dispatch(SET_PLAYER_ONE_SCORE(newScore));
 
-      if (newScore === 100) throw new Error("Finished");
+      if (newScore === 100) {
+        dispatch(SET_STATUS_MESSAGE("YOU WON"));
+        dispatch(INCREMENT_WIN_COUNT());
+        updateWinCount();
+        throw new Error("won");
+      }
 
       if (`${newScore}` in constraints) {
         await sleep(500).then(() => {
@@ -132,7 +161,10 @@ export default function ControlSection() {
 
         dispatch(SET_PLAYER_TWO_SCORE(newScore));
 
-        if (newScore === 100) throw new Error("Finished");
+        if (newScore === 100) {
+          dispatch(SET_STATUS_MESSAGE("YOU LOSE"));
+          throw new Error("lose");
+        }
 
         if (`${newScore}` in constraints) {
           await sleep(500).then(() => {
@@ -149,13 +181,15 @@ export default function ControlSection() {
     });
   }
 
-  if (playerOneScore === 100) {
-    dispatch(SET_STATUS_MESSAGE("YOU WON"));
-  }
+  // if (playerOneScore === 100) {
+  //   dispatch(SET_STATUS_MESSAGE("YOU WON"));
+  //   dispatch(INCREMENT_WIN_COUNT());
+  //   console.log("ok");
+  // }
 
-  if (playerTwoScore === 100) {
-    dispatch(SET_STATUS_MESSAGE("YOU LOSE"));
-  }
+  // if (playerTwoScore === 100) {
+  //   dispatch(SET_STATUS_MESSAGE("YOU LOSE"));
+  // }
 
   return (
     <section className="flex flex-col gap-8 border-2 py-4 px-8">

@@ -1,7 +1,9 @@
 import { useSelector } from "react-redux";
 
 export default function StatusMessage() {
-  const statusMessage = useSelector((state) => state.statusMessage.message);
+  const statusMessage = useSelector(
+    (state) => state.statusMessageLogged.message
+  );
 
   return (
     <div>

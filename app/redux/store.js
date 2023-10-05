@@ -11,10 +11,11 @@ import statusMessageReducer from "./reducers/statusMessage";
 import processStatusReducer from "./reducers/processStatus";
 import authUserReducer from "./reducers/authUser";
 import diceLoggedReducer from "./reducers/diceLogged";
-import playerOneLoggedReducer from "./reducers/PlayerOneLogged";
+import playerOneLoggedReducer from "./reducers/playerOneLogged";
 import playerTwoLoggedReducer from "./reducers/playerTwoLogged";
 import statusMessageLoggedReducer from "./reducers/statusMessageLogged";
 import processStatusLoggedReducer from "./reducers/processStatusLogged";
+import winCountReducer from "./reducers/winCount";
 import {
   FLUSH,
   PAUSE,
@@ -55,6 +56,7 @@ const rootReducer = combineReducers({
   playerTwoLogged: playerTwoLoggedReducer,
   statusMessageLogged: statusMessageLoggedReducer,
   processStatusLogged: processStatusLoggedReducer,
+  winCount: winCountReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
