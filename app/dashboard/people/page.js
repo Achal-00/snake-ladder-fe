@@ -11,7 +11,7 @@ export default function page() {
       <div className="text-center">
         <h1>Under maintenance</h1>
         <Link href="/" className="underline">
-          Home
+          Dashboard
         </Link>
       </div>
     </div>
@@ -19,7 +19,7 @@ export default function page() {
     <div className="min-h-[100dvh] grid place-content-center">
       <div className="text-center">
         <h1>Authorization required</h1>
-        <Link href="/" className="underline">
+        <Link href="/dashboard" className="underline">
           Home
         </Link>
       </div>

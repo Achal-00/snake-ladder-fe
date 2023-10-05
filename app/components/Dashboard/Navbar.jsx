@@ -9,7 +9,10 @@ export default function Navbar() {
       <p className="hidden landscape:block italic font-bold">Snake & Ladder</p>
       <div className="flex w-full landscape:w-auto justify-evenly landscape:justify-normal landscape:gap-8">
         <div>
-          <Link href="/" className="flex items-center gap-2 font-medium">
+          <Link
+            href="/dashboard/leaderboard"
+            className="flex items-center gap-2 font-medium"
+          >
             <img src="/leaderboard.svg" alt="" className="w-5" />
             <p>Ranking</p>
           </Link>
