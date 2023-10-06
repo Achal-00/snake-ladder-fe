@@ -1,4 +1,6 @@
-"use client";
+require("dotenv").config();
+
+("use client");
 import DiceLayout from "./DiceLayout";
 import ResetButton from "./ResetButton";
 import StatusMessage from "./StatusMessage";
@@ -58,7 +60,7 @@ export default function ControlSection() {
       playerTwoScore === 100 ||
       (playerOneScore === 1 && playerTwoScore === 1)
     ) {
-      const response = await fetch("http://localhost:4000/updatepawn", {
+      const response = await fetch(`${process.env.BE_LINK}/updatepawn`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -73,7 +75,7 @@ export default function ControlSection() {
       dispatch(SET_PLAYER_ONE_SCORE(1));
       dispatch(SET_PLAYER_TWO_SCORE(1));
     } else {
-      const response = await fetch("http://localhost:4000/updatepawn", {
+      const response = await fetch(`${process.env.BE_LINK}/updatepawn`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -96,7 +98,7 @@ export default function ControlSection() {
 
   const updateWinCount = async () => {
     let newCount = win + 1;
-    const response = await fetch("http://localhost:4000/updatewincount", {
+    const response = await fetch(`${process.env.BE_LINK}/updatewincount`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

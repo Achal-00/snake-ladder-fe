@@ -1,5 +1,4 @@
 {
-  "proxy": "http://localhost:4000",
   "name": "snake-and-ladder-fe",
   "version": "0.1.0",
   "private": true,
@@ -11,6 +10,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.6",
+    "dotenv": "^16.3.1",
     "framer-motion": "^10.16.4",
     "lottie-react": "^2.4.0",
     "next": "latest",
