@@ -1,7 +1,5 @@
 "use client";
 
-require("dotenv").config();
-
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
@@ -10,7 +8,7 @@ export default function Leaderboard() {
   const [leaderboard, setLeaderboard] = useState([]);
 
   useEffect(() => {
-    fetch(`${process.env.BE_LINK}/getleaderboard`, {
+    fetch(`${process.env.NEXT_PUBLIC_BE_LINK}/getleaderboard`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((response) => response.json())

@@ -1,5 +1,3 @@
-require("dotenv").config();
-
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { LOGIN } from "../redux/reducers/authUser";
@@ -19,14 +17,11 @@ export const useLogin = () => {
     setError(null);
 
     try {
-      const response = await fetch(
-        `${process.env.BE_LINK}/login`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ username, password }),
-        }
-      );
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BE_LINK}/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
       const data = await response.json();
 
       if (!response.ok) {
