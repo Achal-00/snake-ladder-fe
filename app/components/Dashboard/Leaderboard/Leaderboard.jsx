@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import Link from "next/link";
 
 export default function Leaderboard() {
   const token = useSelector((state) => state.authUser.user).token;
