@@ -17,7 +17,7 @@ export const useLogin = () => {
     setError(null);
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BE_LINK}/login`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),

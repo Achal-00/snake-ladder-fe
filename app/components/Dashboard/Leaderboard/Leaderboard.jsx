@@ -8,7 +8,7 @@ export default function Leaderboard() {
   const [leaderboard, setLeaderboard] = useState([]);
 
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_BE_LINK}/getleaderboard`, {
+    fetch(`${process.env.NEXT_PUBLIC_SERVER}/getleaderboard`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((response) => response.json())
