@@ -125,10 +125,10 @@ export default function ControlSection() {
       if (newScore <= 100) {
         document
           .getElementById(`${playerTwoScore}`)
-          .classList.remove("after:content-[url('/pawn-yellow.svg')]");
+          .classList.remove("after:content-[url('pawn-yellow.svg')]");
         document
           .getElementById(`${newScore}`)
-          .classList.add("after:content-[url('/pawn-yellow.svg')]");
+          .classList.add("after:content-[url('pawn-yellow.svg')]");
 
         dispatch(SET_PLAYER_TWO_SCORE(newScore));
 
@@ -138,10 +138,10 @@ export default function ControlSection() {
           await sleep(500).then(() => {
             document
               .getElementById(`${newScore}`)
-              .classList.remove("after:content-[url('/pawn-yellow.svg')]");
+              .classList.remove("after:content-[url('pawn-yellow.svg')]");
             document
               .getElementById(`${constraints[newScore]}`)
-              .classList.add("after:content-[url('/pawn-yellow.svg')]");
+              .classList.add("after:content-[url('pawn-yellow.svg')]");
             dispatch(SET_PLAYER_TWO_SCORE(constraints[newScore]));
           });
         }
