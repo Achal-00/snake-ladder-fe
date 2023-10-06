@@ -1,6 +1,7 @@
+"use client";
+
 require("dotenv").config();
 
-("use client");
 import DiceLayout from "./DiceLayout";
 import ResetButton from "./ResetButton";
 import StatusMessage from "./StatusMessage";
